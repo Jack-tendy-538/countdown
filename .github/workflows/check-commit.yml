@@ -1,0 +1,46 @@
+name: Check if code can be run
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # 测试python代码是否能运行，主要是检查是否有语法错误等问题
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install sv_ttk
+      - name: Run countdown_base.py
+        run: |
+          python python/countdown_base.py
+
+      # 测试C#代码是否能编译
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+      - name: Build C# project
+        run: |
+          dotnet build c#/CountdownShell --configuration Release
+          dotnet build c#/CountdownAvalonia --configuration Release
+
+      # 测试C++代码是否能编译
+      - name: Install C++ dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake
+      - name: Build C++ project
+        run: |
+          mkdir -p C++/build
+          cd C++/build
+          cmake ..
+          make
