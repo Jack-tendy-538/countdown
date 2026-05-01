@@ -15,11 +15,28 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <!-- <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
-    <TextBlock Text="{Binding name}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0"/>
-    <TextBlock Text="{Binding countDown.TimeLeft}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="48"/>
+    <StackPanel>
+        <!-- 输入界面 -->
+        <StackPanel IsVisible="{Binding IsInputVisible}">
+            <TextBlock Text="倒计时名称:" FontSize="16" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+            <TextBox Text="{Binding InputName, Mode=TwoWay}" Width="200" HorizontalAlignment="Center"/>
+            <TextBlock Text="时长 (如: 1h30m / 90s / 1d2h):" FontSize="16" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+            <TextBox Text="{Binding InputSpan, Mode=TwoWay}" Width="200" HorizontalAlignment="Center"/>
+            <Button Content="开始倒计时" Command="{Binding StartCommand}" Width="120" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+        </StackPanel>
 
-    <!-- 用一个进度条来显示倒计时 -->
-    <ProgressBar Value="{Binding countDown.TimeLeft}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0"/>
+        <!-- 倒计时控制界面 -->
+        <StackPanel IsVisible="{Binding IsCountdownVisible}">
+            <TextBlock Text="{Binding CountdownName}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+            <TextBlock Text="{Binding RemainTimeStr}" FontSize="48" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <ProgressBar Minimum="0" Maximum="1" Value="{Binding Progress}" Width="300" Height="20" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Button Content="暂停" Command="{Binding PauseCommand}" Width="80" Margin="5,0"/>
+                <Button Content="继续" Command="{Binding ResumeCommand}" Width="80" Margin="5,0"/>
+                <Button Content="重置" Command="{Binding ResetCommand}" Width="80" Margin="5,0"/>
+                <Button Content="退出" Command="{Binding ExitCommand}" Width="80" Margin="5,0"/>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
 
 </Window>
