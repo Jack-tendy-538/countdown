@@ -30,9 +30,8 @@ jobs:
           dotnet-version: 7.0.x
       - name: Build C# project
         run: |
-          dotnet build c#/CountdownShell --project C#/CountDown.csproj --configuration Release
-          dotnet build c#/CountdownAvalonia --project C#/CountDown.csproj --configuration Release
-
+          dotnet build C#/CountdownShell --project C#/CountDown.csproj
+          dotnet build C#/CountdownAvalonia --project C#/CountDown.csproj
       # 测试C++代码是否能编译
       - name: Install C++ dependencies
         run: |
