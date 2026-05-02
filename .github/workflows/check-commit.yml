@@ -30,8 +30,8 @@ jobs:
           dotnet-version: 7.0.x
       - name: Build C# project
         run: |
-          dotnet build C#/CountdownShell --project C#/CountDown.csproj
-          dotnet build C#/CountdownAvalonia --project C#/CountDown.csproj
+          dotnet build "C#/CountdownShell" --project "C#/CountdownShell/CountdownShell.csproj"
+          dotnet build "C#/CountdownAvalonia" --project "C#/CountdownAvalonia/CountDown.csproj"
       # 测试C++代码是否能编译
       - name: Install C++ dependencies
         run: |
@@ -39,7 +39,7 @@ jobs:
           sudo apt-get install -y build-essential cmake
       - name: Build C++ project
         run: |
-          mkdir -p C++/build
-          cd C++/build
+          mkdir -p "C++/build"
+          cd "C++/build"
           cmake ..
           make

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>倒计时器 - 输入使用对话框</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="countdown.base.js"></script>
+    <script src="countdown.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', '微软雅黑', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #1e2b3c 0%, #0f1a24 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 48px;
+            padding: 30px 35px;
+            width: 520px;
+            max-width: 90%;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.2s;
+        }
+        h1 {
+            text-align: center;
+            color: #f5f9ff;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 28px;
+            font-size: 1.9rem;
+            letter-spacing: 1px;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .new-btn {
+            background: #2c7da0;
+            color: white;
+            border: none;
+            border-radius: 60px;
+            padding: 14px 28px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 80%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: 0.1s linear;
+        }
+        .new-btn:hover {
+            background: #1f6390;
+            transform: scale(0.97);
+        }
+        .info-message {
+            text-align: center;
+            color: #bbd4f0;
+            background: #00000044;
+            border-radius: 40px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 1rem;
+        }
+        .countdown-header {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fee7c0;
+            margin-bottom: 10px;
+            word-break: break-word;
+        }
+        .timer {
+            font-size: 4rem;
+            font-weight: 800;
+            text-align: center;
+            font-family: monospace;
+            background: #00000055;
+            padding: 15px;
+            border-radius: 60px;
+            color: #f5f9ff;
+            letter-spacing: 4px;
+            margin: 20px 0;
+            box-shadow: inset 0 0 8px #0003, 0 8px 20px #0002;
+        }
+        .progress-container {
+            background: #2c3e3f;
+            border-radius: 30px;
+            height: 24px;
+            width: 100%;
+            margin: 20px 0 12px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 4px #0003;
+        }
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #f39c12, #f1c40f);
+            border-radius: 30px;
+            transition: width 0.2s ease;
+        }
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #ccdee6;
+            margin-bottom: 25px;
+        }
+        .button-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .button-row button {
+            flex: 1;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 10px 0;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.1s;
+            font-size: 0.9rem;
+        }
+        .button-row button:nth-child(1) { background: #e67e22; }
+        .button-row button:nth-child(2) { background: #27ae60; }
+        .button-row button:nth-child(3) { background: #8e44ad; }
+        .button-row button:nth-child(4) { background: #c0392b; }
+        .button-row button:hover {
+            filter: brightness(1.1);
+            transform: scale(0.97);
+        }
+        .error-msg {
+            background: #ffecdd;
+            color: #c4450c;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+        hr {
+            border-color: #ffffff30;
+            margin: 16px 0;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #9ab3c7;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1> 灵动倒计时</h1>
+
+    <div class="action-buttons">
+        <button id="newBtn" class="new-btn">新建倒计时</button>
+    </div>
+
+    <!-- 无倒计时时的提示 -->
+    <div id="noTimerMsg" class="info-message">
+        点击上方按钮，使用对话框输入名称和时长，即可开始倒计时。
+    </div>
+
+    <!-- 倒计时控制界面（初始隐藏） -->
+    <div id="countdownArea">
+        <div class="countdown-header">
+            <span id="countdownName">--</span>
+        </div>
+        <div class="timer">
+            <span id="remainTime">00:00:00</span>
+        </div>
+        <div class="progress-container">
+            <div id="progressFill" class="progress-fill"></div>
+        </div>
+        <div class="progress-stats">
+            <span> 进度</span>
+            <span id="progressPercent">0%</span>
+        </div>
+        <div class="button-row">
+            <button id="pauseBtn"> 暂停</button>
+            <button id="resumeBtn"> 恢复</button>
+            <button id="resetBtn"> 重置</button>
+            <button id="exitBtn"> 退出</button>
+        </div>
+        <hr />
+    </div>
+
+    <div id="errorMsg" class="error-msg"></div>
+    <footer>基于 jQuery · 使用对话框输入（prompt）</footer>
+</div>
+</body>
+</html>
