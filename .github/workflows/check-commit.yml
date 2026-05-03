@@ -22,8 +22,8 @@ jobs:
       - name: Run countdown_base.py
         run: |
           python python/countdown_base.py
-          python -m pyinstaller --onefile python/countdown_shell.py
-          python -m pyinstaller --onefile --windowed python/countdown_tkinter.py
+          pyinstaller --onefile python/countdown_shell.py
+          pyinstaller --onefile --windowed python/countdown_tkinter.py
 
       # 测试C#代码是否能编译
       - name: Setup .NET
