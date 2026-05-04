@@ -35,14 +35,14 @@ jobs:
           cd "C#/CountdownShell/"
           dotnet build
           cd ../..
-          cd "C#/CountdownAvalonia/""
+          cd "C#/CountdownAvalonia/"
           dotnet build
           cd ../..
       # 测试C++代码是否能编译
       - name: Install C++ dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake
+
       - name: Build C++ project
         run: |
           g++ -c "C++/countdown_shell.cpp"
