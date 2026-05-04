@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace CountDown;
+namespace CountdownAvalonia;
 
 sealed class Program
 {
