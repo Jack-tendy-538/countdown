@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace CountDown.Views;
+namespace CountdownAvalonia.Views;
 
 public partial class MainWindow : Window
 {

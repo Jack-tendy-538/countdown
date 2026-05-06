@@ -1,17 +1,17 @@
 using System;
 
-namespace CountDown.Models;
+namespace CountdownAvalonia.Models;
 
-class CountDownClass
+class CountdownAvaloniaClass
 {
     public string? Name { get; set; }
     public DateTime TargetDate { get; set; }
     public bool? Status { get; set; } // true表示正在倒计时，false表示暂停，null表示未开始或已结束
     public DateTime RemainDate { get; set; } // 指的是上一次status从true变为false的时间
 
-    static public CountDownClass Create(string name, DateTime targetDate)
+    static public CountdownAvaloniaClass Create(string name, DateTime targetDate)
     {
-        return new CountDownClass
+        return new CountdownAvaloniaClass
         {
             Name = name,
             TargetDate = targetDate,
@@ -20,7 +20,7 @@ class CountDownClass
         };
     }
 
-    static public int GetRemainSeconds(CountDownClass countDown)
+    static public int GetRemainSeconds(CountdownAvaloniaClass countDown)
     {
         if (countDown.Status == null) // 未开始或已结束
         {
@@ -36,7 +36,7 @@ class CountDownClass
         }
     }
 
-    static public void Start(CountDownClass countDown)
+    static public void Start(CountdownAvaloniaClass countDown)
     {
         if (countDown.Status == null) // 未开始
         {
@@ -50,7 +50,7 @@ class CountDownClass
         }
     }
 
-    static public void Pause(CountDownClass countDown)
+    static public void Pause(CountdownAvaloniaClass countDown)
     {
         if (countDown.Status == true) // 正在倒计时
         {
@@ -59,13 +59,13 @@ class CountDownClass
         }
     }
 
-    static public void Reset(CountDownClass countDown)
+    static public void Reset(CountdownAvaloniaClass countDown)
     {
         countDown.Status = null;
         countDown.RemainDate = countDown.TargetDate;
     }
 
-    static public bool IsFinished(CountDownClass countDown)
+    static public bool IsFinished(CountdownAvaloniaClass countDown)
     {
         return GetRemainSeconds(countDown) <= 0;
     }

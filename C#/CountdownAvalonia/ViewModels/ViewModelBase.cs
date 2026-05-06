@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace CountDown.ViewModels;
+namespace CountdownAvalonia.ViewModels;
 
 public abstract class ViewModelBase : ObservableObject
 {

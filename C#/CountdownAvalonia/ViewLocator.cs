@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using CountDown.ViewModels;
+using CountdownAvalonia.ViewModels;
 
-namespace CountDown;
+namespace CountdownAvalonia;
 
 /// <summary>
 /// Given a view model, returns the corresponding view if possible.

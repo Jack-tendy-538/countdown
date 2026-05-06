@@ -1,10 +1,10 @@
-﻿using CountDown.Models;
+﻿using CountdownAvalonia.Models;
 using System;
 using System.Threading;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 
-namespace CountDown.ViewModels;
+namespace CountdownAvalonia.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
@@ -15,7 +15,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public bool IsCountdownVisible { get; set; } = false;
 
     // 倒计时控制界面绑定属性
-    private CountDownClass? _cd;
+    private CountdownAvaloniaClass? _cd;
     public string CountdownName { get; set; } = string.Empty;
     public string RemainTimeStr { get; set; } = "00:00:00";
     public double Progress { get; set; } = 0.0;
@@ -49,7 +49,7 @@ public partial class MainWindowViewModel : ViewModelBase
             OnPropertyChanged(nameof(RemainTimeStr));
             return;
         }
-        _cd = CountDownClass.Create(InputName, DateTime.Now.Add(span));
+        _cd = CountdownAvaloniaClass.Create(InputName, DateTime.Now.Add(span));
         CountdownName = InputName;
         _totalSeconds = (int)span.TotalSeconds;
         if (_totalSeconds <= 0) _totalSeconds = 1;
@@ -67,7 +67,7 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             while (_running && _cd != null)
             {
-                int remain = CountDownClass.GetRemainSeconds(_cd);
+                int remain = CountdownAvaloniaClass.GetRemainSeconds(_cd);
                 if (remain < 0) remain = 0;
                 RemainTimeStr = FormatTime(remain);
                 Progress = 1.0 - (double)remain / _totalSeconds;
@@ -92,16 +92,16 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         if (_cd != null)
         {
-            CountDownClass.Pause(_cd);
+            CountdownAvaloniaClass.Pause(_cd);
             _cd.Status = false;
         }
     }
 
     private void Resume()
     {
-        if (_cd != null && CountDownClass.GetRemainSeconds(_cd) > 0)
+        if (_cd != null && CountdownAvaloniaClass.GetRemainSeconds(_cd) > 0)
         {
-            CountDownClass.Start(_cd);
+            CountdownAvaloniaClass.Start(_cd);
             _cd.Status = true;
         }
     }
@@ -110,7 +110,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         if (_cd != null)
         {
-            CountDownClass.Reset(_cd);
+            CountdownAvaloniaClass.Reset(_cd);
             _cd.Status = true;
             _cd.TargetDate = DateTime.Now.AddSeconds(_totalSeconds);
         }

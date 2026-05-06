@@ -4,10 +4,10 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using CountDown.ViewModels;
-using CountDown.Views;
+using CountdownAvalonia.ViewModels;
+using CountdownAvalonia.Views;
 
-namespace CountDown;
+namespace CountdownAvalonia;
 
 public partial class App : Application
 {
