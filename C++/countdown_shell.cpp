@@ -4,7 +4,7 @@
 #include <chrono>
 #include <atomic>
 #include <csignal>
-#include "count_base.hpp"
+#include "countdown_base.hpp"
 
 std::atomic<bool> pause_requested(false);
 
