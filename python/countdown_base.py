@@ -1,5 +1,4 @@
-import re
-import datetime
+import re, datetime
 
 def parse_span(raw: str) -> datetime.timedelta:
     """
